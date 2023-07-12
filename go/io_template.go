@@ -55,7 +55,6 @@ func getS() string {
 	return sc.Text()
 }
 
-// min, max, abs, nmin, nmax
 func max(a, b int) int {
 	if a > b {
 		return a
@@ -77,6 +76,7 @@ func abs(a int) int {
 	return -a
 }
 
+// nmin returns minimum number in a
 func nmin(a ...int) int {
 	ret := a[0]
 	for _, e := range a {
@@ -85,6 +85,7 @@ func nmin(a ...int) int {
 	return ret
 }
 
+// nmax returns the minimum number in a
 func nmax(a ...int) int {
 	ret := a[0]
 	for _, e := range a {
