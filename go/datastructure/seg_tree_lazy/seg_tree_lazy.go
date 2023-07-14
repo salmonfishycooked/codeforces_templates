@@ -10,10 +10,10 @@ type SegTreeLazy struct {
 }
 
 type segnode struct {
-	l, r  int
-	v     int
-	lazyv int
-	lazy  bool
+	l, r int
+	v    int
+	// lazy flags
+	incr int
 }
 
 func NewSegTreeLazy(a []int) *SegTreeLazy {
@@ -61,7 +61,7 @@ func (t *SegTreeLazy) updateArea(k, l, r, v int) {
 		t.lazy(k, v)
 		return
 	}
-	if t.ele[k].lazy {
+	if t.isLazy(k) {
 		t.lazyDown(k)
 	}
 	mid := (t.ele[k].l + t.ele[k].r) >> 1
@@ -81,19 +81,22 @@ func (t *SegTreeLazy) updateNode(k int) {
 	t.ele[k].v = t.ele[t.leftChild(k)].v + t.ele[t.rightChild(k)].v
 }
 
+// isLazy returns true if the node k is lazy.
+func (t *SegTreeLazy) isLazy(k int) bool {
+	return t.ele[k].incr != 0
+}
+
 // lazy makes the node k being lazy
 func (t *SegTreeLazy) lazy(k, v int) {
-	t.ele[k].lazy = true
-	t.ele[k].lazyv += v
+	t.ele[k].incr += v
 	t.ele[k].v += (t.ele[k].r - t.ele[k].l) * v
 }
 
 // lazyDown clears lazy flag of the node k and passes it to its children
 func (t *SegTreeLazy) lazyDown(k int) {
-	t.lazy(t.leftChild(k), t.ele[k].lazyv)
-	t.lazy(t.rightChild(k), t.ele[k].lazyv)
-	t.ele[k].lazy = false
-	t.ele[k].lazyv = 0
+	t.lazy(t.leftChild(k), t.ele[k].incr)
+	t.lazy(t.rightChild(k), t.ele[k].incr)
+	t.ele[k].incr = 0
 }
 
 // Query returns the sum of [l, r)
@@ -106,7 +109,7 @@ func (t *SegTreeLazy) query(k, l, r int) int {
 	if t.ele[k].l == l && t.ele[k].r == r {
 		return t.ele[k].v
 	}
-	if t.ele[k].lazy {
+	if t.isLazy(k) {
 		t.lazyDown(k)
 	}
 	mid := (t.ele[k].l + t.ele[k].r) >> 1
