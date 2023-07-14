@@ -33,6 +33,15 @@ func getI() int {
 	return i
 }
 
+func getI64() int64 {
+	sc.Scan()
+	i, e := strconv.ParseInt(sc.Text(), 10, 64)
+	if e != nil {
+		panic(e)
+	}
+	return i
+}
+
 func getF() float64 {
 	sc.Scan()
 	i, e := strconv.ParseFloat(sc.Text(), 64)
@@ -46,6 +55,14 @@ func getInts(N int) []int {
 	ret := make([]int, N)
 	for i := 0; i < N; i++ {
 		ret[i] = getI()
+	}
+	return ret
+}
+
+func getInts64(N int) []int64 {
+	ret := make([]int64, N)
+	for i := 0; i < N; i++ {
+		ret[i] = getI64()
 	}
 	return ret
 }
