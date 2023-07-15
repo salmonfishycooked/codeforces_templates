@@ -93,3 +93,46 @@ func (c *Compressor) Get(v int) int {
 func (c *Compressor) Len() int {
 	return len(c.f)
 }
+
+// Compressor Version 2 for common questions
+//type Compressor struct {
+//	f []int
+//}
+//
+//func NewCompressor(a []int) *Compressor {
+//	inst := &Compressor{}
+//	inst.mapTo(a)
+//	return inst
+//}
+//
+//func (c *Compressor) mapTo(a []int) {
+//	mp := make(map[int]struct{})
+//	for _, v := range a {
+//		mp[v] = struct{}{}
+//	}
+//	c.f = make([]int, len(mp))
+//	idx := 0
+//	for i := range mp {
+//		c.f[idx] = i
+//		idx++
+//	}
+//	sort.Ints(c.f)
+//}
+//
+//func (c *Compressor) up(v int) int {
+//	idx := sort.Search(len(c.f), func(i int) bool {
+//		return c.f[i] > v
+//	})
+//	return idx
+//}
+//
+//func (c *Compressor) lo(v int) int {
+//	idx := sort.Search(len(c.f), func(i int) bool {
+//		return c.f[i] >= v
+//	})
+//	return idx
+//}
+//
+//func (c *Compressor) Len() int {
+//	return len(c.f)
+//}
