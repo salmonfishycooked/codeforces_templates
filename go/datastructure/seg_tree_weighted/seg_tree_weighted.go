@@ -36,7 +36,7 @@ func (t *SegTreeWeighted) insert(k, v, l, r int) {
 	} else {
 		t.insert(rc, v, mid, r)
 	}
-	t.ele[k].v = t.ele[lc].v + t.ele[rc].v
+	t.ele[k].v++
 }
 
 // Query [l, r)
