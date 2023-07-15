@@ -30,4 +30,9 @@ func TestSegTreeLazy_UpdateArea(t *testing.T) {
 		t.Log("In TestSegTree_Update(): the result of seg.Query(0, 8) should be 87, but got", v)
 		t.FailNow()
 	}
+	seg.UpdateArea(3, 7, 2)
+	if v := seg.Query(0, 8); v != 95 {
+		t.Log("In TestSegTree_Update(): the result of seg.Query(0, 8) should be 95, but got", v)
+		t.FailNow()
+	}
 }
