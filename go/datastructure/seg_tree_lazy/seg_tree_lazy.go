@@ -5,38 +5,36 @@ package seg_tree_lazy
 // the function UpdateArea() is used by increasing original values by v
 
 type SegTreeLazy struct {
-	ele []segnode
-	ori []int
+	ele []segNode
 }
 
-type segnode struct {
+type segNode struct {
 	l, r int
 	v    int
 	// lazy flags
 	incr int
 }
 
-func NewSegTreeLazy(a []int) *SegTreeLazy {
-	n := len(a)
+func NewSegTreeLazy(nums []int) *SegTreeLazy {
+	n := len(nums)
 	tree := &SegTreeLazy{
-		ele: make([]segnode, 4*n),
-		ori: a,
+		ele: make([]segNode, 4*n),
 	}
-	tree.build(0, 0, n)
+	tree.build(0, 0, n, nums)
 	return tree
 }
 
 // build a segment tree
 // node k saves the information of [l, r)
-func (t *SegTreeLazy) build(k, l, r int) {
+func (t *SegTreeLazy) build(k, l, r int, nums []int) {
 	t.ele[k].l, t.ele[k].r = l, r
 	if l+1 == r {
-		t.ele[k].v = t.ori[l]
+		t.ele[k].v = nums[l]
 		return
 	}
 	mid := (l + r) >> 1
-	t.build(t.leftChild(k), l, mid)
-	t.build(t.rightChild(k), mid, r)
+	t.build(t.leftChild(k), l, mid, nums)
+	t.build(t.rightChild(k), mid, r, nums)
 	t.updateNode(k)
 }
 
