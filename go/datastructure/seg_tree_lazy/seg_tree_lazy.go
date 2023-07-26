@@ -46,17 +46,15 @@ func (t *SegTreeLazy) rightChild(k int) int {
 	return 2*k + 2
 }
 
-// query, the main logic
-
-// UpdateArea changes value of [l, r)
+// AreaIncr changes value of [l, r)
 // using lazy flag
-func (t *SegTreeLazy) UpdateArea(l, r, v int) {
-	t.updateArea(0, l, r, v)
+func (t *SegTreeLazy) AreaIncr(l, r, v int) {
+	t.areaIncr(0, l, r, v)
 }
 
-func (t *SegTreeLazy) updateArea(k, l, r, v int) {
+func (t *SegTreeLazy) areaIncr(k, l, r, v int) {
 	if t.ele[k].l == l && t.ele[k].r == r {
-		t.lazy(k, v)
+		t.lazyIncr(k, v)
 		return
 	}
 	if t.isLazy(k) {
@@ -65,12 +63,12 @@ func (t *SegTreeLazy) updateArea(k, l, r, v int) {
 	mid := (t.ele[k].l + t.ele[k].r) >> 1
 	lc, rc := t.leftChild(k), t.rightChild(k)
 	if r <= mid {
-		t.updateArea(lc, l, r, v)
+		t.areaIncr(lc, l, r, v)
 	} else if l >= mid {
-		t.updateArea(rc, l, r, v)
+		t.areaIncr(rc, l, r, v)
 	} else {
-		t.updateArea(lc, l, mid, v)
-		t.updateArea(rc, mid, r, v)
+		t.areaIncr(lc, l, mid, v)
+		t.areaIncr(rc, mid, r, v)
 	}
 	t.updateNode(k)
 }
@@ -84,16 +82,16 @@ func (t *SegTreeLazy) isLazy(k int) bool {
 	return t.ele[k].incr != 0
 }
 
-// lazy makes the node k being lazy
-func (t *SegTreeLazy) lazy(k, v int) {
+// lazyIncr makes the node k being lazy
+func (t *SegTreeLazy) lazyIncr(k, v int) {
 	t.ele[k].incr += v
 	t.ele[k].v += (t.ele[k].r - t.ele[k].l) * v
 }
 
 // lazyDown clears lazy flag of the node k and passes it to its children
 func (t *SegTreeLazy) lazyDown(k int) {
-	t.lazy(t.leftChild(k), t.ele[k].incr)
-	t.lazy(t.rightChild(k), t.ele[k].incr)
+	t.lazyIncr(t.leftChild(k), t.ele[k].incr)
+	t.lazyIncr(t.rightChild(k), t.ele[k].incr)
 	t.ele[k].incr = 0
 }
 

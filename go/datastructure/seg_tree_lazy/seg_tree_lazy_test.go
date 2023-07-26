@@ -20,17 +20,17 @@ func TestSegTreeLazy_Query(t *testing.T) {
 
 func TestSegTreeLazy_UpdateArea(t *testing.T) {
 	seg := NewSegTreeLazy(a)
-	seg.UpdateArea(0, 3, 5)
+	seg.AreaIncr(0, 3, 5)
 	if v := seg.Query(0, 3); v != 29 {
 		t.Log("In TestSegTree_Update(): the result of seg.Query(0, 3) should be 29, but got", v)
 		t.FailNow()
 	}
-	seg.UpdateArea(1, 3, 2)
+	seg.AreaIncr(1, 3, 2)
 	if v := seg.Query(0, 8); v != 87 {
 		t.Log("In TestSegTree_Update(): the result of seg.Query(0, 8) should be 87, but got", v)
 		t.FailNow()
 	}
-	seg.UpdateArea(3, 7, 2)
+	seg.AreaIncr(3, 7, 2)
 	if v := seg.Query(0, 8); v != 95 {
 		t.Log("In TestSegTree_Update(): the result of seg.Query(0, 8) should be 95, but got", v)
 		t.FailNow()
