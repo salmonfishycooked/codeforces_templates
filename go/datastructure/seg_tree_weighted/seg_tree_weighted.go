@@ -3,18 +3,18 @@ package seg_tree_weighted
 import "sort"
 
 type SegTreeWeighted struct {
-	ele []segnode
+	ele []segNode
 	up  int
 }
 
-type segnode struct {
+type segNode struct {
 	v int
 }
 
 // NewSegTreeWeighted [0, up)
 func NewSegTreeWeighted(up int) *SegTreeWeighted {
 	tree := &SegTreeWeighted{
-		ele: make([]segnode, 4*up),
+		ele: make([]segNode, 4*up),
 		up:  up,
 	}
 	return tree
