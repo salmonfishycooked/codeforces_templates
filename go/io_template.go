@@ -7,9 +7,11 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 var sc = bufio.NewScanner(os.Stdin)
+var rd = bufio.NewReader(os.Stdin)
 var wr = bufio.NewWriter(os.Stdout)
 
 func main() {
@@ -49,6 +51,21 @@ func getF() float64 {
 		panic(e)
 	}
 	return i
+}
+
+// readArrInt read an unknown length array
+// slower than getInts, so we use getInts if we know the length of array
+func readArrInt() []int {
+	line, _ := rd.ReadString('\n')
+	line = strings.ReplaceAll(line, "\r", "")
+	line = strings.ReplaceAll(line, "\n", "")
+	numbs := strings.Split(line, " ")
+	arr := make([]int, len(numbs))
+	for i, n := range numbs {
+		val, _ := strconv.Atoi(n)
+		arr[i] = val
+	}
+	return arr
 }
 
 func getInts(N int) []int {
